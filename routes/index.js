@@ -1,14 +1,23 @@
- var express = require('express');
- var router = express.Router();
- // Create custom homepage
- // --------------------------------------------------
- router.get('/', function(req, res, next) {
-   const users = req.app.locals.users;
+const express = require('express');
+const router = express.Router();
+const users = require('../models/userModel')
+const passwordReset = require("../routes/passwordReset");
+const user = require("../routes/users");
+const app = express();
+const connection = require("../db");
 
-    users.find().limit(3).toArray((err, recent) => {
-      res.render('index', { recent } );
-    });
- });
- // -------------------------------------------------
+// Create custom homepage
+// --------------------------------------------------
+router.get('/', async (req, res) => {
+  const firstThreeUsers = await users.find({}).sort({ _id: -1 }).limit(3).select("email -_id")
+  res.render('index', {recent: firstThreeUsers})
+});
+// -------------------------------------------------
+//reset password
+//--------------------------------------------------
+router.use(express.json());
 
- module.exports = router;
+router.use("/api/users", user);
+router.use("/api/password-reset", passwordReset);
+//--------------------------------------------------
+module.exports = router;

@@ -1,8 +1,11 @@
 
+<link rel="stylesheet" type="text/css" href="../stylesheets/style1.css">
 
 {{> messages }}
 {{#if email}}
-<h2>{{ email }}'s profile</h2>
+<div class="container1">
+
+<h2>{{ first }}'s profile</h2>
 <table class="table">
   <tr>
     <td>First Name:</td>
@@ -21,4 +24,9 @@
     <td>{{ facebook }}</td>
   </tr> --}}
 </table>
+<form action="/auth/logout" method="DELETE">
+<button class="">LogOut</button>
+</form>
+</div>
+
 {{/if}}
