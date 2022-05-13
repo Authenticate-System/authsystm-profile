@@ -46,5 +46,16 @@ router.post('/addasset', (req, res, next) => {
     }
     
   });
+    
 });
+router.get('/back',(req,res) => {
+  req.session.destroy((err) => {
+      if(err) {
+          return console.log(err);
+      }
+      res.redirect('/assetpage');
+  });
+
+});
+
 module.exports = router;
