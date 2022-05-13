@@ -15,11 +15,6 @@ router.get('/addasset', (req, res, next) => {
 });
 
 
-router.get('/assetadmin', (req, res, next) => {
-  const messages = req.flash();
-  res.render('assetadmin', { messages });
-});
-
 
 router.post('/addasset', (req, res, next) => {
   const assetParams = req.body;
@@ -41,7 +36,7 @@ router.post('/addasset', (req, res, next) => {
       req.flash('success', ' Assets have been successfully added.');
       sess = req.session;
       sess.productId = req.body.productId;
-      res.redirect('/assetpage');
+      res.redirect('/asset/addasset');
    
     }
     
