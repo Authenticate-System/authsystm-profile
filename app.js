@@ -11,6 +11,8 @@ require("dotenv").config();
 const hbs = require('hbs');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const bodyparser = require("body-parser");
+const exphbs = require("express-handlebars");
 //const Strategy = require('passport-local').Strategy;
 const authUtils = require('./utils/auth');
 const session = require('express-session');
@@ -19,16 +21,15 @@ const users = require("./models/userModel");
 const connection = require("./db");
 
 // --------------------------------------------------
-
+const userControllerRouter = require("./controllers/userController");
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const assetpageRouter = require('./routes/assetpage');
 
 // Add new routes
 // --------------------------------------------------
 const authRouter = require('./routes/auth');
 const assetRouter = require('./routes/asset');
-
-// --------------------------------------------------
 
 const port = 3000
 const app = express();
@@ -44,9 +45,22 @@ passport.deserializeUser((id, done) => {
 // --------------------------------------------------
 
 
+
+app.use(bodyparser.urlencoded({
+    extended: true
+}));
+app.use(bodyparser.json());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'ejs');
+app.engine('hbs',  exphbs.engine({ extname: 'hbs', defaultLayout: 'layout',
+        runtimeOptions: {
+          allowProtoPropertiesByDefault: true,
+          allowProtoMethodsByDefault: true,
+        },
+     layoutsDir: __dirname + '/views/layout' }));
 app.use(express.static(__dirname + '/public'));
 
 // Set partials for handlebars
@@ -62,9 +76,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-// Configure session, passport, flash
-// --------------------------------------------------
 app.use(session({
   secret: 'session secret',
   resave: false,
@@ -83,6 +94,7 @@ app.use((req, res, next) => {
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/assetpage',assetpageRouter);
 
 // Add new routes
 // --------------------------------------------------
@@ -90,13 +102,13 @@ app.use('/auth', authRouter);
 app.use('/asset', assetRouter);
 
 // --------------------------------------------------
-
+app.use('/userController', userControllerRouter);
+//------------------------
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
