@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = require('mongoose').Schema;
+
+const users = require('../models/userModel');
+
 const assetModel = new mongoose.Schema({
     // _id: {
     //     type: numberlong(3) ,
 
     //     required: true
     // },
-    productId :{
+    productId:{
         type: Number ,
         required: true,
         unique:true
@@ -21,11 +24,10 @@ const assetModel = new mongoose.Schema({
         required: true
     },
     user_email: {
-         type: Schema.Types.ObjectId, ref: 'users' ,
-         unique:true
+         type: Schema.Types.ObjectId, ref: 'users'
     }
 })
 
-const asset =mongoose.model('asset', assetModel);
+const asset = mongoose.model('assets', assetModel);
 
 module.exports = asset;
