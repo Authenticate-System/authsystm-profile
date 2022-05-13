@@ -1,0 +1,33 @@
+<h2>add  a new asset</h2>
+
+{{> messages }}
+
+<div class="container">
+  <div class="form sign-in-container">
+<form action="/asset/addasset" method="POST">
+
+  <div class="form-group">
+    <label for="productId">product Id :</label>
+    <input type="text" class="form-control" name="productId" id="productId">
+  </div>
+  <div class="form-group">
+    <label for="productName">product Name:</label>
+    <input type="text" class="form-control" name="productName" id="productName">
+  </div>
+  
+  <div class="form-group">
+    <label for="productCategory">product Category:</label>
+    <input type="text" class="form-control" name="productCategory" id="productCategory">
+  </div>
+
+     <button class="">Store</button>
+
+    
+</form>
+	<form action="/asset/back" method="DELETE">
+         <button class="">Back</button>
+    </form>
+
+</div>
+		</div>
+	

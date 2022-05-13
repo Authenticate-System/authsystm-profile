@@ -1,0 +1,40 @@
+{{> messages }}
+
+
+ 
+<!--   <% if (messages.error) { %>
+  <p style="color:red"><%- messages.error %></p>
+<% } %> -->
+ <h3> Asset List</h3>
+ <form action='/asset/addasset' method ='POST'><button><i class="fa fa-plus"></i> Create New </button> 
+
+</form>
+<table class="table table-striped">
+  <div>
+    
+    
+    
+</div>   
+    <thead>
+        <tr>
+            <th>Product Id</th>
+            <th>Product Name</th>
+            <th>Product Category</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{#each list}}
+        <tr>
+            <td>{{this.productId}}</td>
+            <td>{{this.productName}}</td>
+            <td>{{this.productCategory}}</td>
+            <td>
+                <a href="/{{this._id}}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+                <a href="/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
