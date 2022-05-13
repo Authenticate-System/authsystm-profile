@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+
 require("dotenv").config();
 
 // New stuff to add
@@ -16,6 +17,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const users = require("./models/userModel");
 const connection = require("./db");
+
 // --------------------------------------------------
 
 const indexRouter = require('./routes/index');
@@ -24,49 +26,14 @@ const usersRouter = require('./routes/users');
 // Add new routes
 // --------------------------------------------------
 const authRouter = require('./routes/auth');
+const assetRouter = require('./routes/asset');
+
 // --------------------------------------------------
 
 const port = 3000
 const app = express();
 app.use(express.json());
-
-// Connect to db
-// --------------------------------------------------
 connection();
-
-//const url = `mongodb+srv://raghad:N7oPBFuxakmVLIEl@auth.nj2qv.mongodb.net/auth?retryWrites=true&w=majority`;
-
-// mongoose.connect(url, {
-//   //useCreatendex: true, 
-//   //useFindAndModify: false, 
-//   useNewUrlParser: true, 
-//   useUnifiedTopology: true 
-// }, err => {
-//   if(err) throw err;
-//   console.log('Connected to MongoDB!!!')
-// })
-
-// Configure passport
-// // --------------------------------------------------
-// passport.use(new Strategy((email,password, done) => {
-//   console.log("HELLO");
-//   users.findOne({ email }, (err, users) => {
-//     if (err) {
-//       return done(err);
-//     }
-
-//     if (!users) {
-//       return done(null, false);
-//     }
-//     if (users.password != authUtils.hashPassword(password)) {
-//       return done(null, false);
-//     }
-
-//     return done(null, users);
-//   });
-// }));
-
-
 passport.serializeUser((users, done) => {
   done(null, user._id);
 });
@@ -91,6 +58,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -119,6 +87,8 @@ app.use('/users', usersRouter);
 // Add new routes
 // --------------------------------------------------
 app.use('/auth', authRouter);
+app.use('/asset', assetRouter);
+
 // --------------------------------------------------
 
 // catch 404 and forward to error handler
