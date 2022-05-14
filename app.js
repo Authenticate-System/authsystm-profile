@@ -102,7 +102,7 @@ app.use('/auth', authRouter);
 app.use('/asset', assetRouter);
 
 // --------------------------------------------------
-app.use('/userController', userControllerRouter);
+//app.use('/userController', userControllerRouter);
 //------------------------
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
