@@ -15,7 +15,7 @@ router.get('/', (req, res)=> {
    asset.find({ productId },(err, docs) => {
        if (!err) {
            res.render('assetadmin', {
-               data: docs
+               list: docs
            });
        } else {
            console.log('Failed to retrieve the Course List: ' + err);
