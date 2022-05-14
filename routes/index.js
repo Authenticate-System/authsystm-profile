@@ -10,7 +10,7 @@ const connection = require("../db");
 // --------------------------------------------------
 router.get('/', async (req, res) => {
   const firstThreeUsers = await users.find({}).sort({ _id: -1 }).limit(3).select("email -_id")
-  res.render('index', {recent: firstThreeUsers})
+  res.render('auth/login', {recent: firstThreeUsers})
 });
 // -------------------------------------------------
 //reset password
