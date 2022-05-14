@@ -64,7 +64,7 @@ router.post('/login', (req, res, next) => {
     }
     else{
       
-      res.redirect('/users');
+      res.redirect('/assetpage');
 
     }
 
@@ -108,7 +108,7 @@ router.post('/register', (req, res, next) => {
       req.flash('success', 'User account registered successfully.');
       sess = req.session;
       sess.email = req.body.email;
-      res.redirect('/users');
+      res.redirect('/assetpage');
     }
     
   });
