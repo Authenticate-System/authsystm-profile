@@ -165,6 +165,53 @@ router.post("/forget", async (req, res) => {
 }
   
 });
+router.get('/change', (req, res, next) => {
+  const messages = req.flash();
+  res.render('change', { messages });
+});
+
+router.post('/change', (req, res, next) => {
+  console.log("email");
+  sess = req.session;
+  email=sess.email;
+  const registrationParams = req.body;
+  console.log(email);
+  oldpassword= registrationParams.oldpassword;
+  const payload = {
+    newPassword: authUtils.hashPassword(registrationParams.newPassword),
+    confPassword : authUtils.hashPassword(registrationParams.confPassword),
+  };
+  console.log ("newPassword");
+
+  if (users.password != oldpassword ) {
+    req.flash('error','Wrong password')
+    res.redirect('/auth/change');
+   
+  }
+
+  else if(payload.newPassword !== payload.confPassword){
+    req.flash('error', 'Passwords do not match.')
+    res.redirect('/auth/change');
+    return
+  }
+  else {
+    users.findOneAndUpdate({email: email} ,{$set: {'password':payload.newPassword}}, function(err, results) {
+
+      if (err ) {
+        console.log(err);
+        req.flash('error', 'error occure.');
+        res.redirect('/auth/change');
+      } 
+      else {
+
+        req.flash('success', ' Password reset sucessfully');
+        console.log('success');
+     
+        res.redirect('/users');
+      }
+    })
+  }
+});
 
 
 module.exports = router;
