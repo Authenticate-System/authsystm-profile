@@ -1,0 +1,30 @@
+
+<link rel="stylesheet" type="text/css" href="../stylesheets/style1.css">
+
+{{> messages }}
+{{#if email}}
+<div class="container1">
+
+<h2>{{ first }}'s profile</h2>
+<table class="table">
+  <tr>
+    <td>First Name:</td>
+    <td>{{ first }}</td>
+  </tr>
+  <tr>
+    <td>Last Name</td>
+    <td>{{ last }}</td>
+  </tr>
+  <tr>
+    <td>Email</td>
+    <td>{{ email }}</td>
+  </tr>
+</table>
+
+<form action="/assetpage" method="GET">
+<button class="">All Asset</button>
+</form>
+<a href="/auth/change">Change password</a>
+</div>
+
+{{/if}}
