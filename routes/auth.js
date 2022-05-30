@@ -46,27 +46,45 @@ router.post('/login', (req, res, next) => {
   password=loginParams.password;
  
   users.findOne({ email }, (err, users) => {
+
     if (err) {
       req.flash('error','Wrong email.')
       res.redirect('/auth/login');
-      
+     
     }
 
     if (!users) {
+      console.log (users)
+
       req.flash('error','User does not exist.')
       res.redirect('/auth/login');
     
     }
-    if (users.password != authUtils.hashPassword(password)) {
+
+   else if (users.password != authUtils.hashPassword(password)) {
       req.flash('error','Wrong password')
       res.redirect('/auth/login');
      
     }
     else{
       
-      res.redirect('/assetpage');
-
+      // if ({email:'admin'}){
+      //   console.log({email:'admin'});
+      //   res.redirect('/assetpage');
+      // }
+      // else{
+      // res.redirect('/userassetpage');
+      // }
+      if(email.includes('admin')){
+        res.redirect('/assetpage');
+      }
+      else{
+        res.redirect('/userassetpage');
+      }
+    
     }
+    // res.redirect('/auth/login');
+
 
   });
 });
