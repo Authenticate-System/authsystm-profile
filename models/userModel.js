@@ -1,6 +1,11 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const Schema = require('mongoose').Schema;
+
 const Joi = require("joi");
+const { number } = require('joi');
+
 const userModel = new mongoose.Schema({
+   
     first: {
         type: String,
         required: true
@@ -9,10 +14,11 @@ const userModel = new mongoose.Schema({
         type: String,
         required: true
     },
+   
     email: {
         type: String,
         required: true,
-        unique: true
+         unique: true
     },
     password: {
         type: String,
@@ -20,7 +26,8 @@ const userModel = new mongoose.Schema({
     }
 })
 
+
 const users = mongoose.model('users', userModel);
 
 
-module.exports = users
+module.exports = users;
