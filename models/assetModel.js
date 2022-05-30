@@ -24,7 +24,8 @@ const assetModel = new mongoose.Schema({
         required: true
     },
     user_email: {
-         type: Schema.Types.ObjectId, ref: 'users'
+         type: String, 
+         ref: 'users'
     }
 })
 
