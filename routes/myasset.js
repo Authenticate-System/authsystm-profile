@@ -14,12 +14,20 @@ router.get('/', (req, res)=> {
 
    asset.find({ user_email: email },(err, docs) => {
        if (!err) {
-           res.render('Myasset', {
-            list: docs
-           });
-       } else {
-           console.log('Failed to retrieve the Course List: ' + err);
-       }
+              if(email.includes('admin')){
+                res.render('Myasset', {
+                    list: docs
+                   });     
+                 }
+             else{
+                res.render('userMyAsset', {
+                    list: docs
+                });
+                    }
+                
+            } else {
+                    console.log('Failed to retrieve the Course List: ' + err);
+            }
    });
 
 });
