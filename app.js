@@ -25,6 +25,8 @@ const userControllerRouter = require("./controllers/userController");
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const assetpageRouter = require('./routes/assetpage');
+const userassetpageRouter=require('./routes/userassetpage');
+const myassetRouter = require('./routes/myasset');
 
 // Add new routes
 // --------------------------------------------------
@@ -50,6 +52,21 @@ app.use(bodyparser.urlencoded({
     extended: true
 }));
 app.use(bodyparser.json());
+app.use(express.static("images"));
+app.get("/static", (req, res) => {
+  res.render("static");
+});
+
+// Route to display dynamic src images
+app.get("/dynamic", (req, res) => {
+  imageList = [];
+  imageList.push({ src: "/public/images/home.png", name: "home" });
+  imageList.push({ src: "/public/images/user.png", name: "user" });
+  imageList.push({ src: "/public/images/myasset.png", name: "myasset" });
+  imageList.push({ src: "/public/images/logout.png", name: "logout" });
+
+  res.render("userasset", { imageList: imageList });
+})
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -95,14 +112,16 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/assetpage',assetpageRouter);
+app.use('/userassetpage',userassetpageRouter);
+app.use('/myasset',myassetRouter);
 
 // Add new routes
 // --------------------------------------------------
 app.use('/auth', authRouter);
 app.use('/asset', assetRouter);
-
+//app.use('/', userControllerRouter);
 // --------------------------------------------------
-////app.use('/userController', userControllerRouter);
+
 //------------------------
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
